@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ikomida
+  labels:
+    name: ikomida
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ikomida-worker
+  labels:
+    name: ikomida-worker
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ikomida-job
+  labels:
+    name: ikomida-job

@@ -1,0 +1,1 @@
+gcloud compute addresses create ikomida-api-ip --global

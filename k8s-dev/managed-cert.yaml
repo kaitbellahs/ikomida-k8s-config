@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: ikomida-managed-cert
+  namespace: ikomida
+spec:
+  domains:
+    - dev.api.ikomida.com

@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ikomida-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: ikomida-api-ip
+    networking.gke.io/managed-certificates: ikomida-managed-cert
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: "gce"
+  namespace: ikomida
+spec:
+  defaultBackend:
+    service:
+      name: gateway-service
+      port:
+        number: 1988

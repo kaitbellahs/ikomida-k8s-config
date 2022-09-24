@@ -1,0 +1,118 @@
+steps:
+  # - id: dockerBuild
+  #   name: "gcr.io/cloud-builders/docker"
+  #   entrypoint: "bash"
+  #   args:
+  #     [
+  #       "-c",
+  #       'pwd && ls ./k8s/',
+  #     ]
+
+  - id: k8sApplyNamespace
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "./k8s/namespace.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+
+  - id: k8sApplyManegedCert
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "./k8s/managed-cert.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sApplyNamespace
+
+  - id: k8sApplyIngress
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "./k8s/ingress.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sApplyManegedCert
+
+  - id: k8sDeleteEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["-n", "ikomida", "delete", "secret", "environment"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sApplyNamespace
+
+  - id: k8sDeleteWorkerEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["-n", "ikomida-worker", "delete", "secret", "environment"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sApplyNamespace
+
+  - id: k8sDeleteJobEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args: ["-n", "ikomida-job", "delete", "secret", "environment"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sApplyNamespace
+
+  - id: k8sCreateEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "-n",
+        "ikomida",
+        "create",
+        "secret",
+        "generic",
+        "environment",
+        "--from-env-file",
+        "./k8s/environment-secret.env",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sDeleteEnv
+
+  - id: k8sCreateWorkerEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "-n",
+        "ikomida-worker",
+        "create",
+        "secret",
+        "generic",
+        "environment",
+        "--from-env-file",
+        "./k8s/environment-secret.env",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sDeleteWorkerEnv
+
+  - id: k8sCreateJobEnv
+    name: "gcr.io/cloud-builders/kubectl"
+    args:
+      [
+        "-n",
+        "ikomida-job",
+        "create",
+        "secret",
+        "generic",
+        "environment",
+        "--from-env-file",
+        "./k8s/environment-secret.env",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
+    waitFor:
+      - k8sDeleteJobEnv
