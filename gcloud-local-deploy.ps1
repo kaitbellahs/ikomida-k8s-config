@@ -11,14 +11,14 @@ if($args.count -gt 0){
 kubectl -n ikomida delete secret environment
 kubectl -n ikomida-worker delete secret environment
 kubectl -n ikomida-job delete secret environment
-
+echo "apply environment: $environment"
 if($environment -eq 1){
     kubectl apply -f k8s-hmlg/namespace.yaml
     kubectl apply -f k8s-hmlg
     kubectl -n ikomida create secret generic environment --from-env-file ./k8s-hmlg/environment-secret.env
     kubectl -n ikomida-worker create secret generic environment --from-env-file ./k8s-hmlg/environment-secret.env
     kubectl -n ikomida-job create secret generic environment --from-env-file ./k8s-hmlg/environment-secret.env
-}else if($environment -eq 2){
+}elseif($environment -eq 2){
     kubectl apply -f k8s/namespace.yaml
     kubectl apply -f k8s
     kubectl -n ikomida create secret generic environment --from-env-file ./k8s/environment-secret.env
