@@ -12,14 +12,16 @@ steps:
     name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "./k8s/namespace.yaml"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
 
   - id: k8sApplyManegedCert
     name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "./k8s/managed-cert.yaml"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sApplyNamespace
@@ -28,7 +30,8 @@ steps:
     name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "./k8s/ingress.yaml"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sApplyManegedCert
@@ -37,7 +40,8 @@ steps:
     name: "gcr.io/cloud-builders/kubectl"
     args: ["-n", "ikomida", "delete", "secret", "environment"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sApplyNamespace
@@ -46,7 +50,8 @@ steps:
     name: "gcr.io/cloud-builders/kubectl"
     args: ["-n", "ikomida-worker", "delete", "secret", "environment"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sApplyNamespace
@@ -55,7 +60,8 @@ steps:
     name: "gcr.io/cloud-builders/kubectl"
     args: ["-n", "ikomida-job", "delete", "secret", "environment"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sApplyNamespace
@@ -74,7 +80,8 @@ steps:
         "./k8s/environment-secret.env",
       ]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sDeleteEnv
@@ -93,7 +100,8 @@ steps:
         "./k8s/environment-secret.env",
       ]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sDeleteWorkerEnv
@@ -112,7 +120,8 @@ steps:
         "./k8s/environment-secret.env",
       ]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
       - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-prod-cluster"
     waitFor:
       - k8sDeleteJobEnv
