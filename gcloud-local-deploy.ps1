@@ -1,9 +1,9 @@
 $environment = 0
 if($args.count -gt 0){
-    if($args[1] -eq "production"){
+    if($args[0] -eq "production"){
         $environment = 2
     }
-    if($args[1] -eq "homologation"){
+    if($args[0] -eq "homologation"){
         $environment = 1
     }
 }
