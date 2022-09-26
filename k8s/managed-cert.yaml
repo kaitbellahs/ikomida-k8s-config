@@ -6,3 +6,4 @@ metadata:
 spec:
   domains:
     - api.ikomida.com
+    - cdn.ikomida.com

@@ -26,12 +26,12 @@ if($environment -eq 1){
     kubectl -n ikomida create secret generic environment --from-env-file ./k8s/environment-secret.env
     kubectl -n ikomida-worker create secret generic environment --from-env-file ./k8s/environment-secret.env
     kubectl -n ikomida-job create secret generic environment --from-env-file ./k8s/environment-secret.env
-    kubectl apply -f k8s-hmlg
+    kubectl apply -f k8s
 }else{
     echo "apply development settings"
     kubectl apply -f k8s-dev/namespace.yaml
     kubectl -n ikomida create secret generic environment --from-env-file ./k8s-dev/environment-secret.env
     kubectl -n ikomida-worker create secret generic environment --from-env-file ./k8s-dev/environment-secret.env
     kubectl -n ikomida-job create secret generic environment --from-env-file ./k8s-dev/environment-secret.env
-    kubectl apply -f k8s-hmlg
+    kubectl apply -f k8s-dev
 }
