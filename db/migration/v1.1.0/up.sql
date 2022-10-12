@@ -1,6 +1,7 @@
 ALTER TABLE `orders` ADD `observation` CHAR(255);
 
 ALTER TABLE `orders` DROP `active`;
+
 ALTER TABLE `plans` ADD `productOptions` INTEGER;
 
 CREATE TABLE
@@ -56,11 +57,13 @@ CREATE TABLE
         `orderId` CHAR(36) BINARY,
         `orderProductId` CHAR(36) BINARY,
         `productOptionId` CHAR(36) BINARY,
+        `contractId` CHAR(36) BINARY,
         `createdAt` DATETIME NOT NULL,
         `updatedAt` DATETIME NOT NULL,
         `deletedAt` DATETIME,
         PRIMARY KEY (`id`),
         FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
         FOREIGN KEY (`orderProductId`) REFERENCES `orderProducts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-        FOREIGN KEY (`productOptionId`) REFERENCES `productOptions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+        FOREIGN KEY (`productOptionId`) REFERENCES `productOptions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY (`contractId`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB;
