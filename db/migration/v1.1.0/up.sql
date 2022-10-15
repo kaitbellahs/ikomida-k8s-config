@@ -1,4 +1,6 @@
-ALTER TABLE `orders` ADD `observation` CHAR(255);
+ALTER TABLE `orders` ADD `observation` VARCHAR (255);
+
+ALTER TABLE `orderProducts` ADD `observation` VARCHAR (255);
 
 ALTER TABLE `orders` DROP `active`;
 
@@ -7,7 +9,7 @@ ALTER TABLE `plans` ADD `productOptions` INTEGER;
 CREATE TABLE
     IF NOT EXISTS `productOptionsCategories` (
         `id` CHAR(36) BINARY NOT NULL,
-        `name` CHAR(100),
+        `name` VARCHAR(100),
         `image` VARCHAR(255),
         `highlighted` TINYINT(1) DEFAULT false,
         `min` INTEGER DEFAULT 0,
@@ -28,7 +30,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS `productOptions` (
         `id` CHAR(36) BINARY NOT NULL,
-        `name` CHAR(100),
+        `name` VARCHAR(100),
         `image` VARCHAR(255),
         `highlighted` TINYINT(1) DEFAULT false,
         `order` INTEGER DEFAULT 0,

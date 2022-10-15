@@ -2,7 +2,9 @@ DROP TABLE IF EXISTS `orderProductOptions`;
 
 ALTER TABLE `orders` DROP `observation`;
 
-ALTER TABLE `orders` ADD `active` tinyint(1) DEFAULT '1';
+ALTER TABLE `orderProducts` DROP `observation`;
+
+ALTER TABLE `orders` ADD `active` tinyint(1) DEFAULT true;
 
 ALTER TABLE `plans` DROP `productOptions`;
 
