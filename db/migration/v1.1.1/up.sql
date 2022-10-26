@@ -1,0 +1,1 @@
+ALTER TABLE `plans` ADD `dueDateAfterXDays` INTEGER DEFAULT 0;
