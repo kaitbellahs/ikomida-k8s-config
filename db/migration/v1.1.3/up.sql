@@ -6,6 +6,8 @@ ADD
 
 ALTER TABLE orders ADD tip INTEGER NULL;
 
+ALTER TABLE orders ADD `table` VARCHAR(50) NULL;
+
 ALTER TABLE products ADD orderTypes JSON NULL;
 
 ALTER TABLE vendorSettings ADD orderTypes JSON NULL;
