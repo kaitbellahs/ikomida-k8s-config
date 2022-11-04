@@ -30,3 +30,18 @@ ALTER TABLE
     ) NULL;
 
 ALTER TABLE coupons ADD orderTypes JSON NULL;
+
+CREATE TABLE
+    IF NOT EXISTS `contacts` (
+        `id` CHAR(36) BINARY NOT NULL,
+        `name` VARCHAR(50),
+        `lastName` VARCHAR(100),
+        `areaCode` VARCHAR(3),
+        `phone` VARCHAR(20),
+        `email` VARCHAR(255),
+        `contractName` VARCHAR(150),
+        `createdAt` DATETIME NOT NULL,
+        `updatedAt` DATETIME NOT NULL,
+        `deletedAt` DATETIME,
+        PRIMARY KEY (`id`)
+    ) ENGINE = InnoDB;
