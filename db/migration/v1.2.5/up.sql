@@ -1,0 +1,1 @@
+ALTER TABLE `pNs` ADD `deviceId` varchar(255) ;
